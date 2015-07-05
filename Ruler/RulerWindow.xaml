@@ -22,5 +22,6 @@
         <CommandBinding Command="{x:Static ruler:RulerWindow.MoveRightCommand}" Executed="OnMoveRightExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.IncreaseWidthCommand}" Executed="OnIncreaseWidthExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.DecreaseWidthCommand}" Executed="OnDecreaseWidthExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.SetOpacityCommand}" Executed="OnSetOpacityExecuted" />
     </Window.CommandBindings>
 </Window>

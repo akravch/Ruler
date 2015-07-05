@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ruler="clr-namespace:Ruler"
-    xmlns:properties="clr-namespace:Ruler.Properties">
+    xmlns:properties="clr-namespace:Ruler.Properties"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ContextMenu x:Key="RulerWindowContextMenu">
         <MenuItem Header="Stay On _Top"
@@ -14,6 +15,78 @@
         <MenuItem Header="Show _ToolTip"
                   IsCheckable="True"
                   IsChecked="{Binding ShowToolTip, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" />
+        <MenuItem Header="Opacity" >
+            <MenuItem Header="10%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.1</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="20%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.2</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="30%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.3</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="40%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.4</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="50%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.5</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="60%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.6</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="70%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.7</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="80%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.8</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="90%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>0.9</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+            <MenuItem Header="100%" 
+                      Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
+                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
+                <MenuItem.CommandParameter>
+                    <system:Double>1.0</system:Double>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+        </MenuItem>
         <Separator />
         <MenuItem Command="{x:Static ruler:RulerWindow.CloseCommand}" 
                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}"/>

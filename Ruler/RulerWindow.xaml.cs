@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Ruler
@@ -17,6 +15,7 @@ namespace Ruler
         public static readonly RoutedCommand MoveRightCommand = new RoutedUICommand("Move _Right", "MoveRight", typeof(RulerWindow), new InputGestureCollection { new KeyGesture(Key.Right, ModifierKeys.Control) });
         public static readonly RoutedCommand IncreaseWidthCommand = new RoutedUICommand("Increase Width", "IncreaseWidth", typeof(RulerWindow), new InputGestureCollection { new KeyGesture(Key.Right, ModifierKeys.Control | ModifierKeys.Shift) });
         public static readonly RoutedCommand DecreaseWidthCommand = new RoutedUICommand("Decrease Width", "DecreaseWidth", typeof(RulerWindow), new InputGestureCollection { new KeyGesture(Key.Left, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static readonly RoutedCommand SetOpacityCommand = new RoutedUICommand("Set Opacity", "SetOpacity", typeof(RulerWindow));
 
         public static readonly DependencyProperty IsVerticalProperty = DependencyProperty.Register(
             "IsVertical", typeof (bool), typeof (RulerWindow), new FrameworkPropertyMetadata(false, OnIsVerticalChanged));
@@ -103,6 +102,17 @@ namespace Ruler
             if (window != null && window.ActualWidth > window.MinWidth)
             {
                 --window.Width;
+            }
+        }
+
+        private void OnSetOpacityExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var window = sender as RulerWindow;
+            var parameter = e.Parameter;
+
+            if (window != null && parameter is double)
+            {
+                window.Opacity = (double)parameter;
             }
         }
 

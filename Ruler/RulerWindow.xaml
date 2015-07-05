@@ -16,8 +16,11 @@
     </Window.Style>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static ruler:RulerWindow.CloseCommand}" Executed="OnCloseExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.MoveUpCommand}" Executed="OnMoveUpExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.MoveDownCommand}" Executed="OnMoveDownExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.MoveLeftCommand}" Executed="OnMoveLeftExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.MoveRightCommand}" Executed="OnMoveRightExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.IncreaseWidthCommand}" Executed="OnIncreaseWidthExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.DecreaseWidthCommand}" Executed="OnDecreaseWidthExecuted" />
     </Window.CommandBindings>
-    <Grid>
-        
-    </Grid>
 </Window>

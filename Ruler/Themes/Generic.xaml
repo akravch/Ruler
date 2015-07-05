@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ruler="clr-namespace:Ruler">
+    xmlns:ruler="clr-namespace:Ruler"
+    xmlns:properties="clr-namespace:Ruler.Properties">
 
     <ContextMenu x:Key="RulerWindowContextMenu">
         <MenuItem Header="Stay On _Top"
@@ -10,17 +11,179 @@
         <MenuItem Header="_Vertical"
                   IsCheckable="True" 
                   IsChecked="{Binding IsVertical, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" />
+        <MenuItem Header="Show _ToolTip"
+                  IsCheckable="True"
+                  IsChecked="{Binding ShowToolTip, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" />
         <Separator />
         <MenuItem Command="{x:Static ruler:RulerWindow.CloseCommand}" 
                   CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}"/>
     </ContextMenu>
 
+    <ToolTip x:Key="RulerToolTip">
+        <MultiBinding StringFormat="{x:Static properties:Resources.ToolTipFormat}">
+            <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}" />
+            <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource Self}" />
+        </MultiBinding>
+    </ToolTip>
+
+    <DrawingBrush x:Key="HorizontalHundredPixelsRulerBrush" Viewport="0,0,100,1" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 99,0 L 99,1 L 0,1 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 99,0 L 100,0 L 100,1 L 99,1 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="VerticalHundredPixelsRulerBrush" Viewport="0,0,1,100" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 0,99 L 1,99 L 1,0 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 0,99 L 0,100 L 1,100 L 1,99 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="HorizontalTwoPixelsRulerBrush" Viewport="0,0,2,2" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 1,0 L 1,1 L 0,1 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 1,0 L 2,0 L 2,1 L 1,1 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="VerticalTwoPixelsRulerBrush" Viewport="0,0,2,2" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 0,1 L 1,1 L 1,0 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 0,1 L 0,2 L 1,2 L 1,1 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+    
+    <DrawingBrush x:Key="HorizontalTenPixelsRulerBrush" Viewport="0,0,10,1" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 9,0 L 9,1 L 0,1 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 9,0 L 10,0 L 10,1 L 9,1 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="VerticalTenPixelsRulerBrush" Viewport="0,0,1,10" ViewportUnits="Absolute" TileMode="Tile">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M 0,0 L 0,9 L 1,9 L 1,0 Z" Brush="Transparent" />
+                <GeometryDrawing Geometry="M 0,9 L 0,10 L 1,10 L 1,9 Z" Brush="Black" />
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <ControlTemplate x:Key="HorizontalRulerTemplate" TargetType="{x:Type ruler:PixelRuler}">
+        <Grid Background="{TemplateBinding Background}"
+              Margin="{TemplateBinding Padding}"
+              SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Name="FirstRow" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Name="LastRow" Height="Auto" />
+            </Grid.RowDefinitions>
+            <Rectangle Name="PART_SmallMarks" Grid.Row="0" SnapsToDevicePixels="True" Fill="{StaticResource HorizontalTwoPixelsRulerBrush}" />
+            <Rectangle Name="PART_MediumMarks" Grid.Row="1" SnapsToDevicePixels="True" Fill="{StaticResource HorizontalTenPixelsRulerBrush}" />
+            <Rectangle Name="PART_LargeMarks" Grid.Row="2" SnapsToDevicePixels="True" Fill="{StaticResource HorizontalHundredPixelsRulerBrush}" />
+            <TextBlock Name="PART_StubTextBlock" Grid.Row="3" Text="Stub" Visibility="Hidden" SnapsToDevicePixels="True" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Orientation" Value="Bottom">
+                <Setter TargetName="PART_SmallMarks" Property="Grid.Row" Value="3" />
+                <Setter TargetName="PART_MediumMarks" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_LargeMarks" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_StubTextBlock" Property="Grid.Row" Value="0" />
+                <Setter TargetName="FirstRow" Property="Height" Value="Auto" />
+                <Setter TargetName="LastRow" Property="Height" Value="*" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="VerticalRulerTemplate" TargetType="{x:Type ruler:PixelRuler}">
+        <Grid Background="{TemplateBinding Background}"
+              Margin="{TemplateBinding Padding}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Name="FirstColumn" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition Name="LastColumn" Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Name="PART_SmallMarks" Grid.Column="0" SnapsToDevicePixels="True" Fill="{StaticResource VerticalTwoPixelsRulerBrush}" />
+            <Rectangle Name="PART_MediumMarks" Grid.Column="1" SnapsToDevicePixels="True" Fill="{StaticResource VerticalTenPixelsRulerBrush}" />
+            <Rectangle Name="PART_LargeMarks" Grid.Column="2" SnapsToDevicePixels="True" Fill="{StaticResource VerticalHundredPixelsRulerBrush}" />
+            <TextBlock Name="PART_StubTextBlock" Grid.Column="3" Text="Stub" Visibility="Hidden" SnapsToDevicePixels="True" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Orientation" Value="Right">
+                <Setter TargetName="PART_SmallMarks" Property="Grid.Column" Value="3" />
+                <Setter TargetName="PART_MediumMarks" Property="Grid.Column" Value="2" />
+                <Setter TargetName="PART_LargeMarks" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_StubTextBlock" Property="Grid.Column" Value="0" />
+                <Setter TargetName="FirstColumn" Property="Width" Value="Auto" />
+                <Setter TargetName="LastColumn" Property="Width" Value="*" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ruler:PixelRuler}">
+        <Setter Property="Template" Value="{StaticResource HorizontalRulerTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Left">
+                <Setter Property="Template" Value="{StaticResource VerticalRulerTemplate}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Right">
+                <Setter Property="Template" Value="{StaticResource VerticalRulerTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Grid x:Key="HorizontalRulerWindowContent" x:Shared="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <ruler:PixelRuler Grid.Row="0" />
+        <TextBlock Grid.Row="1" 
+                   Margin="10,0,0,0"
+                   Text="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" 
+                   VerticalAlignment="Center" />
+        <ruler:PixelRuler Grid.Row="2" Orientation="Bottom" />
+    </Grid>
+    
+    <Grid x:Key="VerticalRulerWindowContent" x:Shared="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+        </Grid.ColumnDefinitions>
+        <ruler:PixelRuler Grid.Column="0" Orientation="Left" />
+        <TextBlock Grid.Column="1" 
+                   Margin="0,10,0,0"
+                   Text="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" 
+                   HorizontalAlignment="Center" />
+        <ruler:PixelRuler Grid.Column="2" Orientation="Right" />
+    </Grid>
+
     <Style x:Key="RulerWindowStyle" TargetType="{x:Type ruler:RulerWindow}">
+        <Setter Property="MinWidth" Value="15" />
+        <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}" />
+        <Setter Property="MinHeight" Value="15" />
+        <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="Opacity" Value="0.7" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource RulerWindowContextMenu}" />
+        <Setter Property="ShowToolTip" Value="True" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome NonClientFrameEdges="None"
@@ -29,17 +192,29 @@
                               CaptionHeight="0" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Background">
+        <Setter Property="ToolTip">
             <Setter.Value>
-                <DrawingBrush Viewport="0,0,2,2" ViewportUnits="Absolute" TileMode="Tile">
-                    <DrawingBrush.Drawing>
-                        <DrawingGroup>
-                            <GeometryDrawing Geometry="M 0,0 L 1,0 L 1,1 L 0,1 Z" Brush="Black" />
-                            <GeometryDrawing Geometry="M 1,0 L 2,0 L 2,1 L 1,1 Z" Brush="White" />
-                        </DrawingGroup>
-                    </DrawingBrush.Drawing>
-                </DrawingBrush>
+                <ToolTip PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{x:Static properties:Resources.ToolTipFormat}">
+                                <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type ToolTip}}" />
+                                <Binding Path="PlacementTarget.ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type ToolTip}}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </ToolTip>
             </Setter.Value>
         </Setter>
+        <Setter Property="Content" Value="{StaticResource HorizontalRulerWindowContent}" />
+        <Style.Triggers>
+            <Trigger Property="ShowToolTip" Value="False">
+                <Setter Property="ToolTip" Value="{x:Null}" />
+            </Trigger>
+            <Trigger Property="IsVertical" Value="True">
+                <Setter Property="Content" Value="{StaticResource VerticalRulerWindowContent}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
+
 </ResourceDictionary>

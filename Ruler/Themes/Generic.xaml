@@ -256,6 +256,9 @@
         <Setter Property="Opacity" Value="0.7" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource RulerWindowContextMenu}" />
+        <Setter Property="Content" Value="{StaticResource HorizontalRulerWindowContent}" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome NonClientFrameEdges="None"
@@ -278,7 +281,6 @@
                 </ToolTip>
             </Setter.Value>
         </Setter>
-        <Setter Property="Content" Value="{StaticResource HorizontalRulerWindowContent}" />
         <Style.Triggers>
             <Trigger Property="ShowToolTip" Value="False">
                 <Setter Property="ToolTip" Value="{x:Null}" />

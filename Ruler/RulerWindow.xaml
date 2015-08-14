@@ -4,7 +4,8 @@
         xmlns:ruler="clr-namespace:Ruler"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         Height="100" Width="400"
-        Topmost="True">
+        Topmost="True"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

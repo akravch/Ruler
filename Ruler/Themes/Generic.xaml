@@ -247,11 +247,6 @@
     </Grid>
 
     <Style TargetType="{x:Type ruler:RulerWindow}">
-        <Setter Property="Icon">
-            <Setter.Value>
-                <BitmapImage UriSource="pack://application:,,,/icon.png" />
-            </Setter.Value>
-        </Setter>
         <Setter Property="MinWidth" Value="15" />
         <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}" />
         <Setter Property="MinHeight" Value="15" />

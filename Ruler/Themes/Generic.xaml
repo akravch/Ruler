@@ -15,7 +15,7 @@
         <MenuItem Header="Show _ToolTip"
                   IsCheckable="True"
                   IsChecked="{Binding ShowToolTip, RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}" />
-        <MenuItem Header="Opacity" >
+        <MenuItem Header="Opacity">
             <MenuItem Header="10%" 
                       Command="{x:Static ruler:RulerWindow.SetOpacityCommand}"
                       CommandTarget="{Binding RelativeSource={RelativeSource AncestorType={x:Type ruler:RulerWindow}}}">
@@ -246,7 +246,12 @@
         <ruler:PixelRuler Grid.Column="2" Orientation="Right" />
     </Grid>
 
-    <Style x:Key="RulerWindowStyle" TargetType="{x:Type ruler:RulerWindow}">
+    <Style TargetType="{x:Type ruler:RulerWindow}">
+        <Setter Property="Icon">
+            <Setter.Value>
+                <BitmapImage UriSource="pack://application:,,,/icon.png" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="MinWidth" Value="15" />
         <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}" />
         <Setter Property="MinHeight" Value="15" />
@@ -256,7 +261,6 @@
         <Setter Property="Opacity" Value="0.7" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource RulerWindowContextMenu}" />
-        <Setter Property="ShowToolTip" Value="True" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome NonClientFrameEdges="None"

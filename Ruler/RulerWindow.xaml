@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ruler="clr-namespace:Ruler"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         Height="100" Width="400"
         Topmost="True">
     <Window.Resources>
@@ -9,11 +10,20 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <system:Double x:Key="LargeMoveDelta">5</system:Double>
+            <system:Double x:Key="SmallMoveDelta">1</system:Double>
         </ResourceDictionary>
     </Window.Resources>
-    <Window.Style>
-        <StaticResource ResourceKey="RulerWindowStyle" />
-    </Window.Style>
+    <Window.InputBindings>
+        <KeyBinding Key="Up" Modifiers="Control" Command="{x:Static ruler:RulerWindow.MoveUpCommand}" CommandParameter="{StaticResource SmallMoveDelta}" />
+        <KeyBinding Key="Down" Modifiers="Control" Command="{x:Static ruler:RulerWindow.MoveDownCommand}" CommandParameter="{StaticResource SmallMoveDelta}" />
+        <KeyBinding Key="Left" Modifiers="Control" Command="{x:Static ruler:RulerWindow.MoveLeftCommand}" CommandParameter="{StaticResource SmallMoveDelta}" />
+        <KeyBinding Key="Right" Modifiers="Control" Command="{x:Static ruler:RulerWindow.MoveRightCommand}" CommandParameter="{StaticResource SmallMoveDelta}" />
+        <KeyBinding Key="Up" Command="{x:Static ruler:RulerWindow.MoveUpCommand}" CommandParameter="{StaticResource LargeMoveDelta}" />
+        <KeyBinding Key="Down" Command="{x:Static ruler:RulerWindow.MoveDownCommand}" CommandParameter="{StaticResource LargeMoveDelta}" />
+        <KeyBinding Key="Left" Command="{x:Static ruler:RulerWindow.MoveLeftCommand}" CommandParameter="{StaticResource LargeMoveDelta}" />
+        <KeyBinding Key="Right" Command="{x:Static ruler:RulerWindow.MoveRightCommand}" CommandParameter="{StaticResource LargeMoveDelta}" />
+    </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static ruler:RulerWindow.CloseCommand}" Executed="OnCloseExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.MoveUpCommand}" Executed="OnMoveUpExecuted" />
@@ -22,6 +32,8 @@
         <CommandBinding Command="{x:Static ruler:RulerWindow.MoveRightCommand}" Executed="OnMoveRightExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.IncreaseWidthCommand}" Executed="OnIncreaseWidthExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.DecreaseWidthCommand}" Executed="OnDecreaseWidthExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.IncreaseHeightCommand}" Executed="OnIncreaseHeightExecuted" />
+        <CommandBinding Command="{x:Static ruler:RulerWindow.DecreaseHeightCommand}" Executed="OnDecreaseHeightExecuted" />
         <CommandBinding Command="{x:Static ruler:RulerWindow.SetOpacityCommand}" Executed="OnSetOpacityExecuted" />
     </Window.CommandBindings>
 </Window>

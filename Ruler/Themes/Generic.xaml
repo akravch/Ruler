@@ -249,7 +249,7 @@
     <Style TargetType="{x:Type ruler:RulerWindow}">
         <Setter Property="MinWidth" Value="15" />
         <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}" />
-        <Setter Property="MinHeight" Value="15" />
+        <Setter Property="MinHeight" Value="80" />
         <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="True" />
